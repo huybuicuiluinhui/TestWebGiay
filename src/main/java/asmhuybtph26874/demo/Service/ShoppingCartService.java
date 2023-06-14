@@ -85,8 +85,12 @@ public class ShoppingCartService implements IShoppingCartService{
         for (CartItem item : maps.values()) {
             System.out.println("đã vô đây rồi nhé");
             Product product = productService.findById(item.getIdProduct());
+
             int soLuongMua = item.getQty();
       int soLuongTon =  product.getQuantity();
+      if (soLuongMua==soLuongTon){
+          product.setStatus(false);
+      }
       product.setQuantity(soLuongTon - soLuongMua);
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setId(item.getIdProduct());

@@ -41,8 +41,6 @@ public class OrderController {
 
     @PostMapping("/checkout")
     public String checkout(@RequestParam("address") String address) {
-
-
         shoppingCartService.checkOut(address);
         shoppingCartService.clear();
         return "redirect:/asm/product/user";
@@ -170,30 +168,31 @@ public class OrderController {
         }
         return false;
     }
-@GetMapping("/chart-test")
-public  String showChartTest(){
-    return "/product/chart/index";
 }
-    @PostMapping("/view-chart")
-    public String showChart(Model model, @RequestParam(name = "startMonth") Integer start, @RequestParam(name = "endMonth") Integer end) {
-        List<Object[]> topSellingProducts = orderDetailService.getTop10BesstSellingProductsByMonthRange(start, end);
-        List<String> productNames = new ArrayList<>();
-        List<String> monthNames = new ArrayList<>();
-        List<Long> quantities = new ArrayList<>();
-        for (Object[] result : topSellingProducts) {
-            String productName = result[0].toString();
-            String monthName =  result[1].toString();
-            Long quantity = (Long) result[2];
-            productNames.add(productName);
-            monthNames.add(monthName);
-            quantities.add(quantity);
-        }
-        System.out.println(productNames);
-        System.out.println(monthNames);
-        System.out.println(quantities);
-        model.addAttribute("productNames", productNames);
-        model.addAttribute("monthNames", monthNames);
-        model.addAttribute("quantities", quantities);
-        return "/product/chart/index";
-    }
-}
+
+//    @GetMapping("/chart-test")
+//    public  String showChartTest(){
+//        return "/product/chart/index";
+//    }
+//    @PostMapping("/view-chart")
+//    public String showChart(Model model, @RequestParam(name = "startMonth") Integer start, @RequestParam(name = "endMonth") Integer end) {
+//        List<Object[]> topSellingProducts = orderDetailService.getTop10BesstSellingProductsByMonthRange(start, end);
+//        List<String> productNames = new ArrayList<>();
+//        List<String> monthNames = new ArrayList<>();
+//        List<Long> quantities = new ArrayList<>();
+//        for (Object[] result : topSellingProducts) {
+//            String productName = result[0].toString();
+//            String monthName =  result[1].toString();
+//            Long quantity = (Long) result[2];
+//            productNames.add(productName);
+//            monthNames.add(monthName);
+//            quantities.add(quantity);
+//        }
+//        System.out.println(productNames);
+//        System.out.println(monthNames);
+//        System.out.println(quantities);
+//        model.addAttribute("productNames", productNames);
+//        model.addAttribute("monthNames", monthNames);
+//        model.addAttribute("quantities", quantities);
+//        return "/product/chart/index";
+//    }

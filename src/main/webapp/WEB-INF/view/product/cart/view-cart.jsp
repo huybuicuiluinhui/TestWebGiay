@@ -31,7 +31,9 @@
     />
 </head>
 <body>
-<div class="container mt-5 mb-5">
+<div class="container
+ mb-5">
+    <%@include file="../../layout/header.jsp" %>
     <div class="d-flex justify-content-center row">
         <div class="col-md-8">
             <div class="p-2">

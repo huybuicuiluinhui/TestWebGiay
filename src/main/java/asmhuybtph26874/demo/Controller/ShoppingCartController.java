@@ -3,10 +3,7 @@ package asmhuybtph26874.demo.Controller;
 import asmhuybtph26874.demo.Model.Cart;
 import asmhuybtph26874.demo.Model.CartItem;
 import asmhuybtph26874.demo.Model.Product;
-import asmhuybtph26874.demo.Service.IProductService;
-import asmhuybtph26874.demo.Service.ParamService;
-import asmhuybtph26874.demo.Service.ProductService;
-import asmhuybtph26874.demo.Service.ShoppingCartService;
+import asmhuybtph26874.demo.Service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -32,6 +29,8 @@ public class ShoppingCartController {
 
     @Autowired
     private Cart cart;
+    @Autowired
+    SessionService sessionService;
     @GetMapping("/view")
     public String viewCart(Model model){
         model.addAttribute("sanPhamTrongGio",cartService.getAllItems());
@@ -40,20 +39,25 @@ public class ShoppingCartController {
     }
 
     @GetMapping("add/{idProduct}")
-    public String addItemToCart(@PathVariable("idProduct") Integer id){
-        Product product = productService.findById(id);
-    if(product != null){
-        CartItem item = new CartItem();
-        item.setIdProduct(product.getIdProduct());
-        item.setNameProduct(product.getNameProduct());
-        item.setPrice(product.getPrice());
-        item.setSize(product.getSize());
-        item.setImg(product.getImg());
-        item.setQty(1);
-        cartService.add(item);
-        session.setAttribute("cart", cart);
-    }
-        return "redirect:/shopping-cart/view";
+    public String addItemToCart(@PathVariable("idProduct") Integer id) {
+        if (checkSecurity()) {
+            Product product = productService.findById(id);
+            if (product != null) {
+                CartItem item = new CartItem();
+                item.setIdProduct(product.getIdProduct());
+                item.setNameProduct(product.getNameProduct());
+                item.setPrice(product.getPrice());
+                item.setSize(product.getSize());
+                item.setImg(product.getImg());
+                item.setQty(1);
+                cartService.add(item);
+                session.setAttribute("cart", cart);
+            }
+            return "redirect:/shopping-cart/view";
+
+        }
+        return "redirect:/account/login";
+
     }
     @GetMapping("/clear")
     public String clearCart(){
@@ -70,8 +74,17 @@ public class ShoppingCartController {
     }
     @PostMapping("/update")
     public String update(@RequestParam("id") Integer id,@RequestParam("qty") Integer qty){
-        cartService.update(id,qty);
-        session.setAttribute("cart", cart);
+        Product product = productService.findById(id);
+        if(qty<product.getQuantity()){
+            session.setAttribute("cart", cart);
+            cartService.update(id,qty);
+        }
+        else if(qty == product.getQuantity()){
+            product.setStatus(false);
+            session.setAttribute("cart", cart);
+            cartService.update(id,qty);
+        }
+
         return "redirect:/shopping-cart/view";
     }
 //    @PostMapping("/update")
@@ -81,4 +94,12 @@ public class ShoppingCartController {
 //        cartService.update(id,qty);
 //        return "redirect:/shopping-cart/view";
 //    }
+public boolean checkSecurity() {
+    String userName = sessionService.get("username");
+    System.err.println("checkSecurity" + userName);
+    if (userName != null) {
+        return true;
+    }
+    return false;
+}
 }

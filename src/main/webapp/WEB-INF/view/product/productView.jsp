@@ -43,40 +43,44 @@
             </form>
         </div>
         <div class="row justify-content-between">
-            <c:forEach items="${page.getContent()}" var="pr">
-                <div class="card p-3 bg-white  mb-3">
-                    <div class="about-product text-center mt-2">
-                        <img src="/resources/imgProduct/${pr.img}" width="300" name="img"/>
-                        <div>
-                            <h6 class="mt-0 text-black">${pr.nameProduct}</h6>
-                            <h8 class="mt-0 text-black-50"></h8>
-                            <br/>
-                            <h8 class="mt-0 text-black-50">${pr.category.nameCate}</h8>
-                        </div>
-                    </div>
-                    <div class="stats mt-2">
-                        <div class="d-flex justify-content-between ">
-                            <span>Chat lieu</span><span>${pr.material}</span>
-                        </div>
-                        <div class="d-flex justify-content-between ">
-                            <span>Thuong hieu</span><span>${pr.brand}</span>
-                        </div>
-                        <div class="d-flex justify-content-between p-price">
-                            <span>Size</span><span>${pr.size}</span>
-                        </div>
-                        <div class="d-flex justify-content-between p-price">
-                            <span>So luong ton</span><span>${pr.quantity}</span>
-                        </div>
-                        <div class="d-flex justify-content-between p-price">
-                            <span>Trang thai</span><span>${!!pr.status?"Con":"Het"}</span>
-                        </div>
 
-                    </div>
-                    <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                        <span>Price</span><span>${pr.price} $</span>
-                        <a href="/shopping-cart/add/${pr.idProduct}">Add to cart</a>
-                    </div>
+<c:forEach items="${page.getContent()}" var="pr">
+    <c:if test="${!!pr.status }">
+        <div class="card p-3 bg-white  mb-3">
+            <div class="about-product text-center mt-2">
+                <img src="/resources/imgProduct/${pr.img}" width="300" name="img"/>
+                <div>
+                    <h6 class="mt-0 text-black">${pr.nameProduct}</h6>
+                    <h8 class="mt-0 text-black-50"></h8>
+                    <br/>
+                    <h8 class="mt-0 text-black-50">${pr.category.nameCate}</h8>
                 </div>
+            </div>
+            <div class="stats mt-2">
+                <div class="d-flex justify-content-between ">
+                    <span>Chat lieu</span><span>${pr.material}</span>
+                </div>
+                <div class="d-flex justify-content-between ">
+                    <span>Thuong hieu</span><span>${pr.brand}</span>
+                </div>
+                <div class="d-flex justify-content-between p-price">
+                    <span>Size</span><span>${pr.size}</span>
+                </div>
+                <div class="d-flex justify-content-between p-price">
+                    <span>So luong ton</span><span>${pr.quantity}</span>
+                </div>
+                <div class="d-flex justify-content-between p-price">
+                    <span>Trang thai</span><span>${!!pr.status?"Con":"Het"}</span>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                <span>Price</span><span>${pr.price} $</span>
+                <a href="/shopping-cart/add/${pr.idProduct}">Add to cart</a>
+            </div>
+        </div>
+
+    </c:if>
             </c:forEach>
 
         </div>
