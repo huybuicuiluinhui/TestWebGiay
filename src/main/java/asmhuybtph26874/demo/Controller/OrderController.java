@@ -41,9 +41,13 @@ public class OrderController {
 
     @PostMapping("/checkout")
     public String checkout(@RequestParam("address") String address) {
-        shoppingCartService.checkOut(address);
-        shoppingCartService.clear();
-        return "redirect:/asm/product/user";
+        if (checkSecurity()) {
+            shoppingCartService.checkOut(address);
+            shoppingCartService.clear();
+            return "redirect:/asm/product/user";
+        }
+        return "redirect:/account/login";
+
     }
 
     @GetMapping("/viewOrder")
