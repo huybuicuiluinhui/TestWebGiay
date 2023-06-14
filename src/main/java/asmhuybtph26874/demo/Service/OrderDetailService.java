@@ -33,4 +33,10 @@ public class OrderDetailService {
         double totalAmount = orderDetailRepository.calculateTotalAmountByOrderId(orderId);
         return totalAmount;
     }
+//    Thống kê hàng tồn
+public List<Object[]> findUnsoldAndLeastSoldProductsByDateRange(Date startDate, Date endDate) {
+    return orderDetailRepository.findUnsoldAndLeastSoldProductsByDateRange(startDate, endDate, PageRequest.of(0, 10));
+}public List<Object[]> findTop10OldestStockProductsByMonthRange(Integer startDate, Integer endDate) {
+    return orderDetailRepository.findTop10OldestStockProductsByMonthRange(startDate, endDate, PageRequest.of(0, 10));
+}
 }

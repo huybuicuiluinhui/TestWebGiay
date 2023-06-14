@@ -40,7 +40,6 @@ public class ShoppingCartController {
 
     @GetMapping("add/{idProduct}")
     public String addItemToCart(@PathVariable("idProduct") Integer id) {
-        if (checkSecurity()) {
             Product product = productService.findById(id);
             if (product != null) {
                 CartItem item = new CartItem();
@@ -48,6 +47,7 @@ public class ShoppingCartController {
                 item.setNameProduct(product.getNameProduct());
                 item.setPrice(product.getPrice());
                 item.setSize(product.getSize());
+                item.setCreateDate(product.getCreateDate());
                 item.setImg(product.getImg());
                 item.setQty(1);
                 cartService.add(item);
@@ -55,8 +55,6 @@ public class ShoppingCartController {
             }
             return "redirect:/shopping-cart/view";
 
-        }
-        return "redirect:/account/login";
 
     }
     @GetMapping("/clear")

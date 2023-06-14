@@ -104,6 +104,7 @@ public class ShoppingCartService implements IShoppingCartService{
              pr.setPrice(item.getPrice());
              pr.setIdProduct(item.getIdProduct());
              pr.setPrice(item.getPrice());
+             pr.setCreateDate(item.getCreateDate());
             orderDetail.setProduct(pr);
         }
         order.setOrderDetails(orderDetails);

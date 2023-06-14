@@ -80,7 +80,7 @@
 
                         <div class="d-flex justify-content-between">
                             <p class="text-muted mb-0">Invoice Date :${order.oderDate}</p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Address: </span>${total} $</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Amount: </span>${total} $</p>
                         </div>
 
 

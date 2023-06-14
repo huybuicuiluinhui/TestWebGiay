@@ -122,6 +122,7 @@ public class OrderController {
         return "redirect:/account/login";
     }
 
+
     @PostMapping("/thong-ke-thang")
     public String getTopSellingProductTheoTuan(Model model,@RequestParam(name = "action") String action, @RequestParam(name = "startMonth") Integer start, @RequestParam(name = "endMonth") Integer end) {
      if(checkSecurity()){
@@ -163,6 +164,10 @@ public class OrderController {
         return "/product/thongKe/thongKe";
 
     }
+    @GetMapping("/view-tk-ton")
+    public String viewTkTon() {
+        return "/product/thongKe/thongKeHangTon";
+    }
 
     public boolean checkSecurity() {
         String userName = sessionService.get("username");
@@ -172,31 +177,83 @@ public class OrderController {
         }
         return false;
     }
-}
+    @PostMapping("/thong-ke-ton")
+    public String getTopSellingProductsTon(Model model,@RequestParam(name = "action") String action, @RequestParam(name = "startDate") String start, @RequestParam(name = "endDate") String end) {
+        if (checkSecurity()) {
+            if(action.equals("search")){
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date startDate = dateFormat.parse(start);
+                    Date endDate = dateFormat.parse(end);
+                    List<Object[]> topSellingProducts = orderDetailService.findUnsoldAndLeastSoldProductsByDateRange(startDate, endDate);
+                    model.addAttribute("topSellingProducts", topSellingProducts);
+                    model.addAttribute("methodSource", "method1");
+                    model.addAttribute("type", "table");
+                    System.out.println(topSellingProducts);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "/product/thongKe/thongKeHangTon";
+            }
+            else if(action.equals("view-chart")){
+                System.out.println("ảo");
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date startDate = dateFormat.parse(start);
+                    Date endDate = dateFormat.parse(end);
+                    List<Object[]> topSellingProducts = orderDetailService.findUnsoldAndLeastSoldProductsByDateRange(startDate, endDate);
+                    List<Integer> quantities = new ArrayList<>();
+                    List<String> productNames = new ArrayList<>();
+                    for (Object[] result : topSellingProducts) {
+                        String productName = result[0].toString();
+                        Integer quantity = (Integer) result[1];
+                        productNames.add(productName);
+                        quantities.add(quantity);
+                    }
+                    model.addAttribute("type", "chart");
+                    model.addAttribute("methodSource", "method3");
+                    model.addAttribute("productNames", productNames);
+                    model.addAttribute("quantities", quantities);
+                    return "/product/thongKe/thongKeHangTon";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-//    @GetMapping("/chart-test")
-//    public  String showChartTest(){
-//        return "/product/chart/index";
-//    }
-//    @PostMapping("/view-chart")
-//    public String showChart(Model model, @RequestParam(name = "startMonth") Integer start, @RequestParam(name = "endMonth") Integer end) {
-//        List<Object[]> topSellingProducts = orderDetailService.getTop10BesstSellingProductsByMonthRange(start, end);
-//        List<String> productNames = new ArrayList<>();
-//        List<String> monthNames = new ArrayList<>();
-//        List<Long> quantities = new ArrayList<>();
-//        for (Object[] result : topSellingProducts) {
-//            String productName = result[0].toString();
-//            String monthName =  result[1].toString();
-//            Long quantity = (Long) result[2];
-//            productNames.add(productName);
-//            monthNames.add(monthName);
-//            quantities.add(quantity);
-//        }
-//        System.out.println(productNames);
-//        System.out.println(monthNames);
-//        System.out.println(quantities);
-//        model.addAttribute("productNames", productNames);
-//        model.addAttribute("monthNames", monthNames);
-//        model.addAttribute("quantities", quantities);
-//        return "/product/chart/index";
-//    }
+            }
+        }
+        System.out.println("THật");
+        return "redirect:/account/login";
+    }
+    @PostMapping("/thong-ke-thang-ton")
+    public String getTopSellingProductTheoThangTon(Model model,@RequestParam(name = "action") String action, @RequestParam(name = "startMonth") Integer start, @RequestParam(name = "endMonth") Integer end) {
+        if(checkSecurity()){
+            if(action.equals("search")){
+                List<Object[]> topSellingProducts = orderDetailService.findTop10OldestStockProductsByMonthRange(start, end);
+                model.addAttribute("topSellingProducts", topSellingProducts);
+                model.addAttribute("type", "table");
+
+                System.out.println("top"+topSellingProducts);
+                return "/product/thongKe/thongKeHangTon";
+            }
+            else if(action.equals("view-chart")){
+                List<Object[]> topSellingProducts = orderDetailService.findTop10OldestStockProductsByMonthRange(start, end);
+                List<String> productNames = new ArrayList<>();
+                List<Integer> quantities = new ArrayList<>();
+                for (Object[] result : topSellingProducts) {
+                    String productName = result[0].toString();
+                    Integer quantity = (Integer) result[1];
+                    productNames.add(productName);
+
+                    quantities.add(quantity);
+                }
+                model.addAttribute("type", "chart");
+                model.addAttribute("methodSource", "method4");
+                model.addAttribute("productNames", productNames);
+                model.addAttribute("quantities", quantities);
+                return "/product/thongKe/thongKeHangTon";
+            }
+        }
+        return "redirect:/account/login";
+    }
+
+}

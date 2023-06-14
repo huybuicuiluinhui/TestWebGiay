@@ -36,7 +36,10 @@
                     <a class="nav-link" href="/asm/product/admin/viewAdd">Thêm sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/view-tk">Thống kê</a>
+                    <a class="nav-link" href="/view-tk">Thống kê bán chạy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/view-tk-ton">Thống kê hàng tồn</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="/viewOrder">Danh sách hóa đơn</a>

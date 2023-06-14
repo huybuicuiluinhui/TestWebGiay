@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Controller
@@ -122,6 +123,7 @@ public class ProductController {
         newProduct.setCategory(categoriesService.findById(idCate));
         newProduct.setImg(file.getOriginalFilename());
         newProduct.setStatus(status);
+        newProduct.setCreateDate(new Date());
 //        newProduct.setSize(size);
         System.out.println(newProduct.getStatus());
         try {
@@ -195,7 +197,7 @@ public class ProductController {
         }
     }
 
-//    Hàm thêm sản phẩm
+//    Hàm thêm ảnh sản phẩm
     public File save(MultipartFile file, String folder) {
         File dir = new File(app.getRealPath(folder));
         if (!dir.exists()) {

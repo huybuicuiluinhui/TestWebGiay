@@ -17,4 +17,5 @@ public class CartItem {
     private int qty= 1;
     private String img;
     private String size;
+    private Date createDate;
 }

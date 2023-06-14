@@ -108,6 +108,7 @@
                         <th class="center-product">Size</th>
                         <th class="center-product">Quantity</th>
                         <th class="center-product">Category</th>
+                        <th class="center-product">CreateDate</th>
                         <th class="center-product">Status</th>
                         <th class="center-product">Action</th>
                     </tr>
@@ -124,6 +125,7 @@
                             <td class="center-product">${pr.size}</td>
                             <td class="center-product">${pr.quantity} đôi </td>
                             <td class="center-product">${pr.category.nameCate}</td>
+                            <td class="center-product">${pr.createDate}</td>
                             <td class="center-product">${pr.status== true ? "Còn":"Hết"}</td>
                             <td class="center-product">
                                 <a  class="view" title="View"  data-bs-toggle="modal" data-bs-target="#exampleModal"

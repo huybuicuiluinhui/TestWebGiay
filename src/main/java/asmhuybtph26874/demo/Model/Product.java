@@ -1,9 +1,15 @@
 package asmhuybtph26874.demo.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-
+import java.util.Date;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "product")
 public class Product   {
@@ -27,90 +33,10 @@ public class Product   {
     private String brand;
     @Column(name = "statusproduct")
     private Boolean status;
+    @Column(name = "create_date")
+    private Date createDate;
     @ManyToOne
     @JoinColumn(name = "id_category", nullable = false)
     private Category category;
 
-    public Product() {
-    }
-
-    public Integer getIdProduct() {
-        return idProduct;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setIdProduct(Integer idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }
